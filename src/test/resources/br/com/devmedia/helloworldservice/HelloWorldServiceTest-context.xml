@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:jaxws="http://cxf.apache.org/jaxws"
+    xmlns="http://www.springframework.org/schema/beans"
+    xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://cxf.apache.org/jaxws
+		http://cxf.apache.org/schemas/jaxws.xsd" >
+
+    
+    <jaxws:endpoint
+        id="server"
+        address="http://localhost:9292/HelloWorldService"
+        implementor="br.com.devmedia.helloworldservice.SimpleHelloWorldService"
+        wsdlLocation="HelloWorldService.wsdl">
+		<jaxws:features>
+		    <bean class="org.apache.cxf.feature.LoggingFeature" />
+		</jaxws:features>
+        <jaxws:properties>
+            <entry key="schema-validation-enabled" value="true" />
+        </jaxws:properties>
+    </jaxws:endpoint>
+    <jaxws:client address="http://localhost:9292/HelloWorldService"
+        id="client"
+        xmlns:s="http://helloworldservice.devmedia.com.br/wsdl/"
+		serviceName="s:HelloWorldService"
+		endpointName="s:HelloWorldService_Port"        	
+        wsdlLocation="HelloWorldService.wsdl"
+        serviceClass="br.com.devmedia.helloworldservice.wsdl.DigaOlaPortType" >
+    </jaxws:client>        
+        
+</beans>
